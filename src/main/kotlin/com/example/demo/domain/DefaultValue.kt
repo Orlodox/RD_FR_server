@@ -8,16 +8,17 @@ import javax.persistence.*
 
 
 @Entity
-@Table(name = "defaults")
-@ToString(of = ["id", "typeCode"])
+@Table
+@ToString(of = ["id"])
 @EqualsAndHashCode(of = ["id"])
 
-class Default(
+class DefaultValue(
         @Column @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Int = 0,
 
-        @Column(nullable = false, updatable = false)
-        var typeCode: String = "",
+        @ManyToOne(optional = false)
+        @JoinColumn(name = "type")
+        var type: Type = Type(),
 
         @Column(columnDefinition = "json")
         @Convert(converter = MapJSONConverter::class)
@@ -25,11 +26,15 @@ class Default(
 
         @Column(columnDefinition = "json")
         @Convert(converter = MapJSONConverter::class)
-        var marks: MutableMap<String,  Any> = mutableMapOf(),
+        var marks: MutableMap<String, Any> = mutableMapOf(),
 
         @Column(columnDefinition = "json")
         @Convert(converter = MapJSONConverter::class)
-        var params: MutableMap<String, Any> = mutableMapOf()
+        var params: MutableMap<String, Any> = mutableMapOf(),
+
+        @Column(columnDefinition = "json")
+        @Convert(converter = MapJSONConverter::class)
+        var sizes: MutableMap<String, Any> = mutableMapOf()
 )
 
 

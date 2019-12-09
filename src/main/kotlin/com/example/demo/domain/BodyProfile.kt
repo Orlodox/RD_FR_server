@@ -7,21 +7,21 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "bodyProfile")
-@ToString(of = ["id", "account_id"])
-@EqualsAndHashCode(of = ["id"])
+@ToString(of = ["account_id"])
+@EqualsAndHashCode(of = ["account_id"])
 
 class BodyProfile(
         @Column @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: Int = 0,
-
-        @Column(nullable = false, updatable = false)
         var account_id: Int = 0,
 
-        @Column(nullable = true, updatable = true)
-        public var chest: Float? = null,
+//        @Column(nullable = false, updatable = false)
+//        var account_id: Int = 0,
 
         @Column(nullable = true, updatable = true)
-        public var waist: Float? = null,
+        var chest: Float? = null,
+
+        @Column(nullable = true, updatable = true)
+        var waist: Float? = null,
 
         @Column(nullable = true, updatable = true)
         var hips_girth: Float? = null,

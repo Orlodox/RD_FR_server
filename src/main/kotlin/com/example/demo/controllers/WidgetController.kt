@@ -1,10 +1,10 @@
 package com.example.demo.controllers
 
 import com.example.demo.domain.BodyProfile
-import com.example.demo.domain.Info
+import com.example.demo.domain.Type
 import com.example.demo.domain.Item
 import com.example.demo.repo.BodyProfileRepo
-import com.example.demo.repo.InfoRepo
+import com.example.demo.repo.TypeRepo
 import com.example.demo.repo.ItemRepo
 import org.springframework.beans.BeanUtils
 import org.springframework.data.repository.findByIdOrNull
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("widget")
-class WidgetController(var bodyProfileRepo: BodyProfileRepo, var itemRepo: ItemRepo, var infoRepo: InfoRepo) {
+class WidgetController(var bodyProfileRepo: BodyProfileRepo, var itemRepo: ItemRepo, var typeRepo: TypeRepo) {
 
     @GetMapping("bodyProfile/{account_id}")
     fun getBodyProfileByAccountId(@PathVariable("account_id") accountID: Int): BodyProfile? {
@@ -45,11 +45,11 @@ class WidgetController(var bodyProfileRepo: BodyProfileRepo, var itemRepo: ItemR
         val customer = bodyProfileRepo.findByAccountId(customerID)
         if (item == null || customer == null)
             return FittingResults(itemID, customerID, "Изделие или пользователь не найдены")
-        return FittingInfo(item, infoRepo.findByTypeCode(item.typeCode), customer).results()
+        return FittingInfo(item, typeRepo.findByIdOrNull(item.type.typeCode) ?: Type(), customer).results()
     }
 }
 
-class FittingInfo(val item: Item, val typeInfo: Info, val customer: BodyProfile) {
+class FittingInfo(val item: Item, val typeInfo: Type, val customer: BodyProfile) {
 
     private fun sizeResult(sizeName: String, sizeValues: MutableMap<String, Int>) {
         val estimatedParams = item.marks["sda"] as Mark

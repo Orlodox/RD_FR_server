@@ -4,4 +4,4 @@ import com.example.demo.domain.BodyProfileInfo
 import org.springframework.data.jpa.repository.JpaRepository
 
 
-interface BodyProfileInfoRepo : JpaRepository<BodyProfileInfo, Int>{}
+interface BodyProfileInfoRepo : JpaRepository<BodyProfileInfo, Int>
