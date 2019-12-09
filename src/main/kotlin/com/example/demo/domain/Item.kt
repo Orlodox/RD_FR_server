@@ -19,18 +19,16 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "item")
-@ToString(of = ["id", "typeCode"])
+@ToString(of = ["id"])
 @EqualsAndHashCode(of = ["id"])
 
 class Item(
         @Column @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Int = 0,
 
-        @Column(nullable = false, updatable = false)
-        var typeName: String = "",
-
-        @Column(nullable = false, updatable = false)
-        var typeCode: String = "",
+        @ManyToOne(optional = false)
+        @JoinColumn(name = "type")
+        var type: Type = Type(),
 
         @Column
         var name: String = "",
@@ -41,7 +39,8 @@ class Item(
 
         @Column(columnDefinition = "json")
         @Convert(converter = MapJSONConverter::class)
-        var sizes: MutableMap<String, MutableMap<String, Int>> = mutableMapOf(),
+        var sizes: MutableMap<String, Any> = mutableMapOf(),
+//        var sizes: MutableMap<String, MutableMap<String, Int>> = mutableMapOf(),
 
         @Column(columnDefinition = "json")
         @Convert(converter = MapJSONConverter::class)

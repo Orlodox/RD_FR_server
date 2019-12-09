@@ -1,8 +1,5 @@
 package com.example.demo
 
-import org.springframework.boot.json.BasicJsonParser
-import org.springframework.boot.json.JsonParser
-
 class Sample(
         val sample: Map<String, Int>
 )
